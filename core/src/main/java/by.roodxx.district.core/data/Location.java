@@ -1,4 +1,4 @@
-package by.roodxx.district.core;
+package by.roodxx.district.core.data;
 
 public class Location {
     private final long latitude;
