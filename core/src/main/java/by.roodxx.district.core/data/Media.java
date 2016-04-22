@@ -13,6 +13,8 @@ public class Media {
 
     private Owner owner;
 
+    private MediaType mediaType;
+
     public Media(String mediaUrl, Location location) {
         this.mediaUrl = mediaUrl;
         this.location = location;

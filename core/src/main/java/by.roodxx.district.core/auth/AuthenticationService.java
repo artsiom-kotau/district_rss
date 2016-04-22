@@ -1,6 +1,6 @@
 package by.roodxx.district.core.auth;
 
-public interface Authentication {
+public interface AuthenticationService {
 
     AuthInfo login(BaseCredentials credentials);
 
