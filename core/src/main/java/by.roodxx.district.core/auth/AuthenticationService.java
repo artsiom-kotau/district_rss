@@ -1,8 +1,8 @@
 package by.roodxx.district.core.auth;
 
-public interface AuthenticationService {
+public interface AuthenticationService<K extends BaseCredentials, V extends AuthInfo> {
 
-    AuthInfo login(BaseCredentials credentials);
+    V login(K credentials);
 
-    void logout(AuthInfo authInfo);
+    void logout(V authInfo);
 }

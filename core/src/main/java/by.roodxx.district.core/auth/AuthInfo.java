@@ -1,14 +1,5 @@
 package by.roodxx.district.core.auth;
 
-public class AuthInfo {
+public interface AuthInfo {
 
-    private final String token;
-
-    public AuthInfo(String token) {
-        this.token = token;
-    }
-
-    public String getToken() {
-        return token;
-    }
 }
