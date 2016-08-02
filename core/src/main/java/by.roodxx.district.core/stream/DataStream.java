@@ -1,7 +1,7 @@
 package by.roodxx.district.core.stream;
 
 
-import by.roodxx.district.core.data.Location;
+import by.roodxx.district.core.data.location.Location;
 
 public interface DataStream<T> extends AutoCloseable{
 

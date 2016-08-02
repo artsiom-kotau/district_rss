@@ -1,5 +1,7 @@
 package by.roodxx.district.core.data;
 
+import by.roodxx.district.core.data.location.Location;
+
 import java.util.Collection;
 
 public class Media {
