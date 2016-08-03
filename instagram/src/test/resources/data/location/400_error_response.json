@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "error_type": "APIInvalidParametersError",
+    "code": 400,
+    "error_message": "missing ll (lat,lng) or facebook_places_id"
+  }
+}

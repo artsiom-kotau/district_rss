@@ -28,4 +28,13 @@ public class Place {
     public Location getLocation() {
         return location;
     }
+
+    @Override
+    public String toString() {
+        return "{\"Place\":{"
+                + "\"id\":\"" + id + "\""
+                + ", \"name\":\"" + name + "\""
+                + ", \"location\":" + location
+                + "}}";
+    }
 }
