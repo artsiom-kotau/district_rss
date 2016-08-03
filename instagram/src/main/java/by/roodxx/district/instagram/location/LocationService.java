@@ -22,9 +22,9 @@ public class LocationService {
 
     private final ObjectMapper mapper;
 
-    public LocationService() {
+    public LocationService(HttpDataFetcher dataFetcher) {
 
-        dataFetcher = new HttpDataFetcher();
+        this.dataFetcher = dataFetcher;
 
         mapper = new ObjectMapper();
         SimpleModule module = new SimpleModule("place", new org.codehaus.jackson.Version(0,0,1,""));
