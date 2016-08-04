@@ -1,9 +1,11 @@
 package by.roodxx.district.core.stream;
 
 
-import by.roodxx.district.core.data.location.Location;
+import by.roodxx.district.core.data.location.Place;
 
-public interface DataStream<T> extends AutoCloseable{
+import java.util.Collection;
 
-    DataSet<T> load(Location location);
+public interface DataStream<T> {
+
+    MediaCursor<T> load(Collection<Place> places);
 }
