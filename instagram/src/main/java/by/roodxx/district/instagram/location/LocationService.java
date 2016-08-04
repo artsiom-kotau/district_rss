@@ -37,8 +37,12 @@ public class LocationService {
     public Collection<Place> getPlaces(Location location) {
         try {
             Response response = dataFetcher.fetchByGet(InstagramRequestFactory.requestForLocation(location));
+            if (response.getCode() != HttpStatus.SC_OK) {
+                throw new IllegalArgumentException(response.getContent());
+            }
+
             InstagramResponseMeta meta = mapper.readValue(response.getContent(), InstagramResponseMeta.class);
-            if (response.getCode() != HttpStatus.SC_OK || meta.getCode() != 200) {
+            if (meta.getCode() != 200) {
                 throw new IllegalArgumentException(meta.getContent());
             }
             return mapper.readValue(response.getContent(), new TypeReference<List<Place>>() {});

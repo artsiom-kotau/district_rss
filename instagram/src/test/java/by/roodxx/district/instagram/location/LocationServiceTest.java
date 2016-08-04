@@ -47,4 +47,15 @@ public class LocationServiceTest {
             locationService.getPlaces(new Location("52.374284","31.028692"));
         }
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testInCorrectRequestWithInvalidPath() throws IOException {
+        try(InputStream data = LocationServiceTest.class.getClassLoader().getResourceAsStream("data/location/404_error.html")) {
+            String testData = IOUtils.toString(data);
+            HttpDataFetcher dataFetcher = mock(HttpDataFetcher.class);
+            when(dataFetcher.fetchByGet(any(GetRequest.class))).thenReturn(new Response(HttpStatus.SC_NOT_FOUND, testData));
+            LocationService locationService = new LocationService(dataFetcher);
+            locationService.getPlaces(new Location("52.374284","31.028692"));
+        }
+    }
 }
