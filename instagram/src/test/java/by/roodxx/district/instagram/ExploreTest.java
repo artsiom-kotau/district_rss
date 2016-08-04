@@ -17,7 +17,7 @@ public class ExploreTest {
     public void testRealLocationRequest() {
 
         LocationService locationService = new LocationService(new HttpDataFetcher());
-        Collection<Place> places = locationService.getPlaces(new Location("52.373057", "29.031638"));
+        Collection<Place> places = locationService.getPlaces(new Location("52.373057", "31.012727"));
         assertNotNull(places);
         assertEquals(20, places.size());
     }

@@ -5,6 +5,7 @@ import by.roodxx.district.core.data.location.Location;
 import java.util.Collection;
 
 public class Media {
+
     private final String mediaUrl;
 
     private final Location location;
