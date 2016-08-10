@@ -18,6 +18,25 @@ public class Location {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Location)) return false;
+
+        Location location = (Location) o;
+
+        if (latitude != null ? !latitude.equals(location.latitude) : location.latitude != null) return false;
+        return longitude != null ? longitude.equals(location.longitude) : location.longitude == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = latitude != null ? latitude.hashCode() : 0;
+        result = 31 * result + (longitude != null ? longitude.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "{\"Location\":{"
                 + "\"latitude\":\"" + latitude + "\""

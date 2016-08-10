@@ -30,6 +30,27 @@ public class Place {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Place)) return false;
+
+        Place place = (Place) o;
+
+        if (id != null ? !id.equals(place.id) : place.id != null) return false;
+        if (name != null ? !name.equals(place.name) : place.name != null) return false;
+        return location != null ? location.equals(place.location) : place.location == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (location != null ? location.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "{\"Place\":{"
                 + "\"id\":\"" + id + "\""

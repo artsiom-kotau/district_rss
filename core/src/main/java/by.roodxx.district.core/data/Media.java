@@ -2,29 +2,39 @@ package by.roodxx.district.core.data;
 
 import by.roodxx.district.core.data.location.Location;
 
-import java.util.Collection;
-
 public class Media {
 
-    private final String mediaUrl;
+    private String id;
+
+    private final String mediaSource;
+
+    private String mediaUrl;
 
     private final Location location;
 
     private String description;
 
-    private Collection<String> tags;
-
     private Owner owner;
 
     private MediaType mediaType;
 
-    public Media(String mediaUrl, Location location) {
-        this.mediaUrl = mediaUrl;
+    private long timestamp;
+
+    public Media(String mediaSource, Location location) {
+        this.mediaSource = mediaSource;
         this.location = location;
     }
 
-    public String getMediaUrl() {
-        return mediaUrl;
+    public MediaType getMediaType() {
+        return mediaType;
+    }
+
+    public void setMediaType(MediaType mediaType) {
+        this.mediaType = mediaType;
+    }
+
+    public String getMediaSource() {
+        return mediaSource;
     }
 
     public Location getLocation() {
@@ -39,19 +49,35 @@ public class Media {
         this.description = description;
     }
 
-    public Collection<String> getTags() {
-        return tags;
-    }
-
-    public void setTags(Collection<String> tags) {
-        this.tags = tags;
-    }
-
     public Owner getOwner() {
         return owner;
     }
 
     public void setOwner(Owner owner) {
         this.owner = owner;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getMediaUrl() {
+        return mediaUrl;
+    }
+
+    public void setMediaUrl(String mediaUrl) {
+        this.mediaUrl = mediaUrl;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 }
