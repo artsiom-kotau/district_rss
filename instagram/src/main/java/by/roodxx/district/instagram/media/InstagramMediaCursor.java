@@ -52,6 +52,9 @@ public class InstagramMediaCursor implements MediaCursor<Media> {
 
     @Override
     public boolean hasNext() {
+        if (placesWithNextPage.isEmpty()) {
+
+        }
         return !placesWithNextPage.isEmpty();
     }
 
@@ -60,6 +63,7 @@ public class InstagramMediaCursor implements MediaCursor<Media> {
         if (!hasNext()) {
             throw new NoSuchElementException();
         }
+        //todo replace with Stack
         Map<Place, Iterator<Media>> fetchedMedia = new HashMap<>();
         Set<Place> finishedPlaces = new HashSet<>();
         for(Place place : placesWithNextPage) {
@@ -80,7 +84,41 @@ public class InstagramMediaCursor implements MediaCursor<Media> {
                 throw new RuntimeException(e);
             }
         }
-        return null;
+
+        placesWithNextPage.removeAll(finishedPlaces);
+
+        int count = getFetchSize();
+        Collection<Media> mediaFeed = new ArrayList<>(count);
+
+        Map<Place, Media> topMedias = new HashMap<>();
+        while (count > 0) {
+
+            for(Map.Entry<Place, Iterator<Media>> mediaEntry : fetchedMedia.entrySet()) {
+                Place place = mediaEntry.getKey();
+                if (!topMedias.containsKey(place)) {
+                    Iterator<Media> mediaIterator = mediaEntry.getValue();
+                    //todo remove if doesn't have next
+                    if (mediaIterator.hasNext()) {
+                        topMedias.put(place, mediaIterator.next());
+                    }
+                }
+            }
+
+            Place placeForMaxMedia = null;
+            Media maxMedia = null;
+            for(Map.Entry<Place, Media> mediaEntry : topMedias.entrySet()) {
+                Place place = mediaEntry.getKey();
+                Media media = mediaEntry.getValue();
+                if ( placeForMaxMedia == null || maxMedia.getTimestamp() < media.getTimestamp()){
+                    placeForMaxMedia = place;
+                    maxMedia = mediaEntry.getValue();
+                }
+            }
+            mediaFeed.add(maxMedia);
+            topMedias.remove(placeForMaxMedia);
+            count--;
+        }
+        return mediaFeed;
     }
 
     private GetRequest createGetRequestForMedia(Place place) {

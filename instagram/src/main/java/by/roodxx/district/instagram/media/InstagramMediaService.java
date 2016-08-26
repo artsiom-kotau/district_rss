@@ -22,6 +22,6 @@ public class InstagramMediaService implements DataStream<Media> {
     @Override
     public MediaCursor<Media> load(Collection<Place> places) {
 
-        return null;
+        return new InstagramMediaCursor(dataFetcher, places);
     }
 }

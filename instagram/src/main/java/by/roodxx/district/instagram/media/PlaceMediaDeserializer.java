@@ -84,6 +84,8 @@ class PlaceMediaDeserializer extends JsonDeserializer<PlaceMediaInfo> {
 
     private Location getLocation(JsonNode node) {
         JsonNode locationNode = node.get("location");
-        return new Location(locationNode.get("latitude").getNumberValue().toString(), locationNode.get("longitude").getNumberValue().toString());
+        return new Location(
+                locationNode.get("latitude").getNumberValue().toString(),
+                locationNode.get("longitude").getNumberValue().toString());
     }
 }
