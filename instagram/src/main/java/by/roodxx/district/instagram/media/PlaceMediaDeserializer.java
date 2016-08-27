@@ -28,13 +28,15 @@ class PlaceMediaDeserializer extends JsonDeserializer<PlaceMediaInfo> {
 
         Collection<Media> medias = new ArrayList<>();
         ObjectCodec oc = jp.getCodec();
-        JsonNode node = oc.readTree(jp);
+        JsonNode mainNode = oc.readTree(jp).get("location");
 
-        Location location = getLocation(node);
+        Location location = getLocation(mainNode);
 
-        boolean hasNext = isHasNext(node);
+        JsonNode mediaNode = mainNode.get("media");
 
-        JsonNode dataNode = node.get("nodes");
+        boolean hasNext = isHasNext(mediaNode);
+
+        JsonNode dataNode = mediaNode.get("nodes");
         Iterator<JsonNode> mediaIterator = dataNode.getElements();
         while (mediaIterator.hasNext()) {
             JsonNode jsonMedia = mediaIterator.next();
@@ -44,6 +46,8 @@ class PlaceMediaDeserializer extends JsonDeserializer<PlaceMediaInfo> {
             setDescription(jsonMedia, media);
             setMediaType(jsonMedia, media);
             setOwner(jsonMedia, media);
+            media.setTimestamp(jsonMedia.get("date").asLong());
+            medias.add(media);
         }
         return new PlaceMediaInfo(medias, hasNext);
     }
@@ -83,9 +87,8 @@ class PlaceMediaDeserializer extends JsonDeserializer<PlaceMediaInfo> {
     }
 
     private Location getLocation(JsonNode node) {
-        JsonNode locationNode = node.get("location");
         return new Location(
-                locationNode.get("latitude").getNumberValue().toString(),
-                locationNode.get("longitude").getNumberValue().toString());
+                node.get("lat").getNumberValue().toString(),
+                node.get("lng").getNumberValue().toString());
     }
 }

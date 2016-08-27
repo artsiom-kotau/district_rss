@@ -80,4 +80,20 @@ public class Media {
     public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
+
+
+
+    @Override
+    public String toString() {
+        return "{\"Media\":{"
+                + "\"id\":\"" + id + "\""
+                + ", \"mediaSource\":\"" + mediaSource + "\""
+                + ", \"mediaUrl\":\"" + mediaUrl + "\""
+                + ", \"location\":" + location
+                + ", \"description\":\"" + description + "\""
+                + ", \"owner\":" + owner
+                + ", \"mediaType\":\"" + mediaType + "\""
+                + ", \"timestamp\":\"" + timestamp + "\""
+                + "}}";
+    }
 }
