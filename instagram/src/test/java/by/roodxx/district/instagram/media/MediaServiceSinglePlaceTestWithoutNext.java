@@ -25,7 +25,7 @@ import static org.mockito.Mockito.when;
 /**
  * Created by roodxx on 4.8.16.
  */
-public class MediaServiceSinglePlaceTest {
+public class MediaServiceSinglePlaceTestWithoutNext {
 
     private InstagramMediaService mediaService;
 
@@ -37,7 +37,7 @@ public class MediaServiceSinglePlaceTest {
 
     @Before
     public void setUp() throws IOException {
-        String data = IOUtils.toString(MediaServiceSinglePlaceTest.class.getClassLoader().getResourceAsStream("data/media/location_266878632_response_part1.json"));
+        String data = IOUtils.toString(MediaServiceSinglePlaceTestWithoutNext.class.getClassLoader().getResourceAsStream("data/media/location_266878632_response_part1.json"), "UTF-8");
         HttpDataFetcher dataFetcher = mock(HttpDataFetcher.class);
         when(dataFetcher.fetchByGet(any(GetRequest.class))).thenReturn(new Response(HttpStatus.SC_OK, data));
 
@@ -69,7 +69,7 @@ public class MediaServiceSinglePlaceTest {
             Media feedItem = feedIterator.next();
 
             if (comparator.compare(outputItem, feedItem) != 0) {
-                fail(String.format("Medias are not equal:\n Expected: %s\n Actual: %s\n", outputItem, feedItem));
+                fail(String.format("Medias are not equal\n: Expected\n: %s \nActual\n: %s\n", outputItem, feedItem));
             }
         }
     }

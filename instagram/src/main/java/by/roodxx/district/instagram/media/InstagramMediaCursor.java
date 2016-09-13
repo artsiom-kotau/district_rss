@@ -17,6 +17,7 @@ import java.util.*;
 /**
  * Created by roodxx on 9.8.16.
  */
+
 public class InstagramMediaCursor implements MediaCursor<Media> {
 
     static final int DEFAULT_FETCH_SIZE = 12;
@@ -28,6 +29,8 @@ public class InstagramMediaCursor implements MediaCursor<Media> {
     private Set<Place> placesWithNextPage;
 
     private final ObjectMapper mapper;
+
+    private Collection<Media> cash;
 
     public InstagramMediaCursor(HttpDataFetcher dataFetcher, Collection<Place> places) {
         this.dataFetcher = dataFetcher;
@@ -52,18 +55,19 @@ public class InstagramMediaCursor implements MediaCursor<Media> {
 
     @Override
     public boolean hasNext() {
-        if (placesWithNextPage.isEmpty()) {
-
-        }
-        return !placesWithNextPage.isEmpty();
+        cash = fetchMedias();
+        return !cash.isEmpty();
     }
 
     @Override
     public Collection<Media> next() {
-        if (!hasNext()) {
+        if (cash.isEmpty()) {
             throw new NoSuchElementException();
         }
-        //todo replace with Stack
+        return cash;
+    }
+
+    private Map<Place, Iterator<Media>> getMediaByPlace() {
         Map<Place, Iterator<Media>> fetchedMedia = new HashMap<>();
         Set<Place> finishedPlaces = new HashSet<>();
         for(Place place : placesWithNextPage) {
@@ -84,22 +88,31 @@ public class InstagramMediaCursor implements MediaCursor<Media> {
                 throw new RuntimeException(e);
             }
         }
-
         placesWithNextPage.removeAll(finishedPlaces);
+        return fetchedMedia;
+    }
+
+    private Collection<Media> fetchMedias() {
+
+        //todo replace with Stack
+        Map<Place, Iterator<Media>> fetchedMedia = getMediaByPlace();
 
         int count = getFetchSize();
         Collection<Media> mediaFeed = new ArrayList<>(count);
-
         Map<Place, Media> topMedias = new HashMap<>();
         while (count > 0) {
+            Iterator<Map.Entry<Place, Iterator<Media>>> mediaByPlaceEntry = fetchedMedia.entrySet().iterator();
 
-            for(Map.Entry<Place, Iterator<Media>> mediaEntry : fetchedMedia.entrySet()) {
+            while (mediaByPlaceEntry.hasNext()) {
+                Map.Entry<Place, Iterator<Media>> mediaEntry = mediaByPlaceEntry.next();
                 Place place = mediaEntry.getKey();
                 if (!topMedias.containsKey(place)) {
                     Iterator<Media> mediaIterator = mediaEntry.getValue();
                     //todo remove if doesn't have next
                     if (mediaIterator.hasNext()) {
                         topMedias.put(place, mediaIterator.next());
+                    } else {
+                        mediaByPlaceEntry.remove();
                     }
                 }
             }

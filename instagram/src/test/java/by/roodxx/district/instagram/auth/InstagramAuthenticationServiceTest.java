@@ -1,7 +1,9 @@
 package by.roodxx.district.instagram.auth;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
+@Ignore
 public class InstagramAuthenticationServiceTest {
 
     @Test
