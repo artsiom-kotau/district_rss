@@ -30,7 +30,7 @@ public class InstagramMediaCursor implements MediaCursor<Media> {
 
     private final ObjectMapper mapper;
 
-    private Collection<Media> cash;
+    private Collection<Media> cache;
 
     public InstagramMediaCursor(HttpDataFetcher dataFetcher, Collection<Place> places) {
         this.dataFetcher = dataFetcher;
@@ -55,19 +55,19 @@ public class InstagramMediaCursor implements MediaCursor<Media> {
 
     @Override
     public boolean hasNext() {
-        if (cash.isEmpty()) {
-            cash = fetchMedias();
+        if (cache.isEmpty()) {
+            cache = fetchMedias();
         }
-        return !cash.isEmpty();
+        return !cache.isEmpty();
     }
 
     @Override
     public Collection<Media> next() {
-        if (cash.isEmpty()) {
+        if (cache.isEmpty()) {
             throw new NoSuchElementException();
         }
-        Collection<Media> media = new ArrayList<>(cash);
-        cash.clear();
+        Collection<Media> media = new ArrayList<>(cache);
+        cache.clear();
         return media;
     }
 
