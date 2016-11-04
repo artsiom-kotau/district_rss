@@ -55,7 +55,9 @@ public class InstagramMediaCursor implements MediaCursor<Media> {
 
     @Override
     public boolean hasNext() {
-        cash = fetchMedias();
+        if (cash.isEmpty()) {
+            cash = fetchMedias();
+        }
         return !cash.isEmpty();
     }
 
