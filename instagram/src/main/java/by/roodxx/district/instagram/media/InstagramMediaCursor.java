@@ -64,7 +64,9 @@ public class InstagramMediaCursor implements MediaCursor<Media> {
         if (cash.isEmpty()) {
             throw new NoSuchElementException();
         }
-        return cash;
+        Collection<Media> media = new ArrayList<>(cash);
+        cash.clear();
+        return media;
     }
 
     private Map<Place, Iterator<Media>> getMediaByPlace() {
