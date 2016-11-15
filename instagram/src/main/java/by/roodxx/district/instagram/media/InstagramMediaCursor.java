@@ -36,11 +36,14 @@ public class InstagramMediaCursor implements MediaCursor<Media> {
         this.dataFetcher = dataFetcher;
         this.lastFetchedIdForPlace = new HashMap<>();
         this.placesWithNextPage = new HashSet<>(places);
+        this.cache = new ArrayList<>(0);
 
         mapper = new ObjectMapper();
         SimpleModule module = new SimpleModule("media", new org.codehaus.jackson.Version(0,0,1,""));
         module.addDeserializer(PlaceMediaInfo.class, new PlaceMediaDeserializer());
         mapper.registerModule(module);
+
+
     }
 
     @Override
